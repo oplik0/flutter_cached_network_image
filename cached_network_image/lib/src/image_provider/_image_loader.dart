@@ -129,9 +129,11 @@ class ImageLoader implements platform.ImageLoader {
       scheduleMicrotask(() {
         evictImage();
       });
-
-      errorListener?.call();
-      rethrow;
+      if (errorListener != null) {      
+        errorListener!.call();
+      } else {
+        rethrow;
+      }
     } finally {
       await chunkEvents.close();
     }
